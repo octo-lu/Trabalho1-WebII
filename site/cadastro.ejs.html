@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Cadastro - Vida Saudável</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Adicione aqui o estilo CSS conforme necessário */
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Cadastrar-se</h2>
+        <form action="/register" method="POST">
+            <input type="text" name="name" placeholder="Nome Completo" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Senha" required>
+            <button type="submit">Cadastrar</button>
+        </form>
+        <a href="/login.ejs">Já possui uma conta? Faça login</a>
+    </div>
+</body>
+</html>

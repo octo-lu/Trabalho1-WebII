@@ -1,0 +1,20 @@
+[
+  {
+    "name": "teste",
+    "telefone": "11111111112",
+    "dataMarcada": "25/09/24",
+    "numeroPessoas": "2"
+  },
+  {
+    "name": "teste",
+    "telefone": "11111111112",
+    "dataMarcada": "24/09/24",
+    "numeroPessoas": "2"
+  },
+  {
+    "name": "aaaaaa",
+    "telefone": "3425346",
+    "dataMarcada": "22/09/24",
+    "numeroPessoas": "2"
+  }
+]

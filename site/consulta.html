@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Consultas - Vida Saudável</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('floresta.jpg');
+            /* Substitua pelo caminho da sua imagem de floresta */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            width: 1000px;
+            /* Aumentado para acomodar mais colunas */
+            text-align: center;
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+
+        .filter-container {
+            margin-bottom: 20px;
+        }
+
+        .filter-container input {
+            margin: 0 10px;
+            padding: 5px;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #4CAF50;
+            padding: 15px;
+            /* Aumentado para dar mais espaço */
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .edit-button,
+        .delete-button,
+        .modify-button {
+            background-color: #2196F3;
+            /* Azul para editar e modificar */
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .edit-button:hover,
+        .modify-button:hover {
+            background-color: #1976D2;
+            /* Tom mais escuro de azul ao passar o mouse */
+        }
+
+        .delete-button {
+            background-color: #f44336;
+            /* Vermelho para deletar */
+        }
+
+        .delete-button:hover {
+            background-color: #d32f2f;
+            /* Tom mais escuro de vermelho ao passar o mouse */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Análise de Consultas</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Data</th>
+                    <th>Numero de Pessoas</th>
+                </tr>
+            </thead>
+            <tbody id="consultasList">
+                <!-- As consultas serão inseridas aqui -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        
+        const lista = []
+
+        function renderizarConsultas(filtroNome = '', filtroSexo = '', filtroEmail = '') {
+
+            fetch('http://localhost:3000/schedule').then((res) => {
+
+                res.json().then((consultas) => {
+
+                    lista.push(consultas)
+
+                    
+
+                    const consultasList = document.getElementById('consultasList');
+                    consultasList.innerHTML = ''; // Reseta a lista
+
+                    const consultasFiltradas = consultas.filter(consulta => {
+                        return (
+                            consulta.name.toLowerCase().includes(filtroNome.toLowerCase())
+                        );
+                    });
+
+
+                    consultasFiltradas.forEach((consulta, index) => {
+                        const consultaRow = document.createElement('tr');
+                        consultaRow.innerHTML = `
+                    <td>${consulta.name}</td>
+                    <td>${consulta.telefone}</td>
+                    <td>${consulta.dataMarcada}</td>
+                    <td>${consulta.numeroPessoas}</td>
+                    <td>
+                        <button class="delete-button" onclick="deletarConsulta(${index})">Deletar</button>
+                    </td>
+                `;
+                        consultasList.appendChild(consultaRow);
+                    });
+
+
+                })
+            })
+
+
+        }
+
+
+        function modificarConsulta(index) {
+            
+
+
+        }
+
+        function deletarConsulta(index) {
+            if (confirm("Tem certeza que deseja deletar esta consulta?")) {
+                console.log(lista[0][index])
+                const schedule = lista[0][index]
+                
+                fetch(`http://localhost:3000/schedule/${schedule._id}`, {
+                    method: 'DELETE'
+                })
+                window.location.href = 'http://localhost:5500/site/consulta.html'
+
+                renderizarConsultas();
+            }
+        }
+
+        // Renderiza as consultas ao carregar a página
+        renderizarConsultas();
+    </script>
+</body>
+
+</html>
